@@ -1,9 +1,7 @@
 
-
-
 // Get the HTML elements
 var homeBtn = document.getElementById('home-btn');
-var exploreBtn = document.getElementById('explore-btn');
+var exploreNavBtn = document.getElementById('explore-nav-btn');
 var cartBtn = document.getElementById('cart-btn');
 var accountBtn = document.getElementById('account-btn');
 var signUpBtn = document.getElementById('sign-up-btn');
@@ -12,6 +10,7 @@ var cartTable = document.getElementById('cart-table');
 var checkoutBtn = document.getElementById('checkout-btn');
 var usernameSpan = document.getElementById('username');
 var orderHistoryList = document.getElementById('order-history');
+var signUpForm = document.getElementById('sign-up-form');
 
 // Initialize cart
 var cart = [];
@@ -25,14 +24,13 @@ homeBtn.addEventListener('click', function() {
     document.getElementById('sign-up-page').classList.remove('active');
 });
 
-document.getElementById('explore-btn').addEventListener('click', function() {
+exploreBtn.addEventListener('click', function() {
     document.getElementById('explore-page').classList.add('active');
     document.getElementById('home-page').classList.remove('active');
     document.getElementById('cart-page').classList.remove('active');
     document.getElementById('account-page').classList.remove('active');
     document.getElementById('sign-up-page').classList.remove('active');
 });
-
 
 cartBtn.addEventListener('click', function() {
     document.getElementById('cart-page').classList.add('active');
@@ -92,38 +90,33 @@ function updateCartTable() {
     });
 }
 
-// Display username and order history
-var userData = {
-    username: 'dimpal',
-    orderHistory: [
-        { orderId: 1, date: '2022-01-01' },
-        
-    ],
-};
-
-usernameSpan.textContent = userData.username;
-userData.orderHistory.forEach(function(order) {
-    var listItem = document.createElement('LI');
-    listItem.textContent = 'Order #' + order.orderId + ': ' + order.date;
-    orderHistoryList.appendChild(listItem);
-});
-
-
-// Get the sign-up form
-var signUpForm = document.getElementById('sign-up-form');
-
-// Add an event listener to the form
+// Add event listener to sign-up form
 signUpForm.addEventListener('submit', function(event) {
     // Prevent the default form submission behavior
     event.preventDefault();
 
     // Get the user input values
-    var name = document.getElementById('name').value;
+    var username = document.getElementById('username').value;
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
 
-    // Store the user data (e.g., in local storage or a database)
-    // For now, just log the user data to the console
-    console.log('User signed up:', name, email, password);
+    // Store the user data in local storage
+    localStorage.setItem('username', name);
+    localStorage.setItem('orderHistory', JSON.stringify([])); // Initialize order history as an empty array
 });
+
+// Display username and order history
+var username = localStorage.getItem('username');
+var orderHistory = JSON.parse(localStorage.getItem('orderHistory'));
+
+usernameSpan.textContent = username;
+
+if (orderHistory) {
+    orderHistory.forEach(function(order) {
+        var listItem = document.createElement('LI');
+        listItem.textContent = 'Order #' + order.orderId + ': ' + order.date;
+        orderHistoryList.appendChild(listItem);
+    });
+}
+
 
