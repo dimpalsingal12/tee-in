@@ -107,3 +107,23 @@ userData.orderHistory.forEach(function(order) {
     listItem.textContent = 'Order #' + order.orderId + ': ' + order.date;
     orderHistoryList.appendChild(listItem);
 });
+
+
+// Get the sign-up form
+var signUpForm = document.getElementById('sign-up-form');
+
+// Add an event listener to the form
+signUpForm.addEventListener('submit', function(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get the user input values
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    // Store the user data (e.g., in local storage or a database)
+    // For now, just log the user data to the console
+    console.log('User signed up:', name, email, password);
+});
+
